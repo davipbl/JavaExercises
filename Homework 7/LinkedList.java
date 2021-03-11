@@ -1,6 +1,6 @@
 import java.util.NoSuchElementException;
 
-public class LinkedList<T extends List<T>> implements Node<T>  {
+public class LinkedList<T extends Node<T>> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private int size;
@@ -8,13 +8,14 @@ public class LinkedList<T extends List<T>> implements Node<T>  {
     public LinkedList() {
         head = null;
         tail = null;
+        size = 0;
     }
 
-    public List<T> getHead() {
+    public Node<T> getHead() {
         return head;
     }
 
-    public List<T> getTail() {
+    public Node<T> getTail() {
         return tail;
     }
 
@@ -70,12 +71,13 @@ public class LinkedList<T extends List<T>> implements Node<T>  {
         }
     }
 
-    public void removeAtIndex(int index) {
+    public T removeAtIndex(int index) {
         if (isEmpty()) {
-            return;
+            return null;
         }
         int counter = 0;
         Node<T> current = this.getHead();
+        T found = null;
 
         try {
             while (current.next != null && counter < index ) {
@@ -86,6 +88,7 @@ public class LinkedList<T extends List<T>> implements Node<T>  {
                 throw new IllegalArgumentException();
             }
             if (counter == index) {
+                found = current.data;
                 current = current.next;
 
                 if (counter == 0) {
@@ -97,6 +100,8 @@ public class LinkedList<T extends List<T>> implements Node<T>  {
                 }
                 tail = current.next;
                 size = counter + 1;
+
+                return found;
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Your index is out of the list bounds");
@@ -137,7 +142,7 @@ public class LinkedList<T extends List<T>> implements Node<T>  {
             return found;
         } catch (NoSuchElementException e) {
             System.out.println("The data is not present in the list");
-        } catch (IllegalArgumentExcetion e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("You cannot remove null data from the list");
         }
     }
