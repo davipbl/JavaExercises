@@ -1,6 +1,7 @@
 import java.util.NoSuchElementException;
 
-public class LinkedList<T extends Node<T>> implements List<T> {
+public class LinkedList<T> implements List<T> {
+
     private Node<T> head;
     private Node<T> tail;
     private int size;
@@ -20,11 +21,18 @@ public class LinkedList<T extends Node<T>> implements List<T> {
     }
 
     public void addAtIndex(T data, int index) {
+        
         int counter = 0;
         Node<T> node = new Node<T>(data, null);
         Node<T> current = this.getHead();
 
         try {
+            if (this.isEmpty() && index == 0) {
+                head = new Node<T>(data, head);
+                tail = head;
+                size = 1;
+                return;
+            }
             while (current.next != null && counter < index ) {
                     current = current.next;
                     counter++;
@@ -43,7 +51,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
                     current = current.next;
                     counter++;
                 }
-                tail = current.next;
+                tail = current;
                 size = counter + 1;
             }
         } catch (IllegalArgumentException e) {
@@ -69,6 +77,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
         } catch (IllegalArgumentException e) {
             System.out.println("Your index is out of the list bounds");
         }
+        return null;
     }
 
     public T removeAtIndex(int index) {
@@ -98,7 +107,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
                     current = current.next;
                     counter++;
                 }
-                tail = current.next;
+                tail = current;
                 size = counter + 1;
 
                 return found;
@@ -106,6 +115,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
         } catch (IllegalArgumentException e) {
             System.out.println("Your index is out of the list bounds");
         }
+        return null;
     }
 
     public T remove(T data) {
@@ -136,7 +146,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
                 current = current.next;
                 counter++;
             }
-            tail = current.next;
+            tail = current;
             size = counter + 1;
 
             return found;
@@ -145,6 +155,7 @@ public class LinkedList<T extends Node<T>> implements List<T> {
         } catch (IllegalArgumentException e) {
             System.out.println("You cannot remove null data from the list");
         }
+        return null;
     }
 
     public void clear() {
@@ -156,13 +167,6 @@ public class LinkedList<T extends Node<T>> implements List<T> {
     }
 
     public int size() {
-        int counter = 0;
-        Node<T> current = this.getHead();
-
-        while (current.next != null) {
-            current = current.next;
-            counter++;
-        }
-        return counter + 1;
+        return size;
     }
 }
