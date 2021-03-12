@@ -34,25 +34,25 @@ public class LinkedList<T> implements List<T> {
                 return;
             }
             while (current.next != null && counter < index ) {
-                    current = current.next;
-                    counter++;
-                }
+                current = current.next;
+                counter++;
+            }
             if (index < 0 || counter != index) {
                 throw new IllegalArgumentException();
             }
             if (counter == index) {
-                node.next = current;
-                current = node;
-
                 if (counter == 0) {
-                    head = current;
+                    head = new Node<T>(data, head);
                 }
+                node.next = current.next;
+                current.next = node;
+                
                 while (current.next != null) {
                     current = current.next;
                     counter++;
                 }
                 tail = current;
-                size = counter + 1;
+                size++;
             }
         } catch (IllegalArgumentException e) {
             System.out.println("Your index is out of the list bounds");
@@ -108,7 +108,7 @@ public class LinkedList<T> implements List<T> {
                     counter++;
                 }
                 tail = current;
-                size = counter + 1;
+                size = size - 1;
 
                 return found;
             }
@@ -128,7 +128,9 @@ public class LinkedList<T> implements List<T> {
         T found = null;
 
         try {
+            System.out.println(current.data);
             while (current != null) {
+                System.out.println(data + " / " + current.data);
                 if (data.equals(current.data))
                 {
                     found = current.data;
@@ -147,7 +149,7 @@ public class LinkedList<T> implements List<T> {
                 counter++;
             }
             tail = current;
-            size = counter + 1;
+            size--;
 
             return found;
         } catch (NoSuchElementException e) {
@@ -168,5 +170,14 @@ public class LinkedList<T> implements List<T> {
 
     public int size() {
         return size;
+    }
+
+    public String toString() {
+        return "My current size is " + size + " and my head and tail are (" + head.data + ", " + tail.data + ").";
+    }
+
+    public void addToFront(T newData) {
+        head = new Node<T>(newData, head);
+        size++;
     }
 }
