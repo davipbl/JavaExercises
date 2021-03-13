@@ -49,7 +49,7 @@ public class Dog extends Pet {
     public boolean equals(Object o) {
         if (o instanceof Pet) {
             Pet animal = (Pet) o;
-            return this.getName().equals(animal.getName()) && this.getDroolRate().equals(animal.getDroolRate());
+            return this.getName().equals(animal.getName()) && this.getDroolRate() == (((Dog) animal).getDroolRate());
         }
         return false;
     }

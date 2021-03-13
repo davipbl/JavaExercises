@@ -56,8 +56,8 @@ public abstract class Pet {
         return false;
     }
 
-    protected heal() {
-        this.setHealth(1.0);
-        this.setPainLevel(1);
+    protected void heal() {
+        health = 1.0;
+        painLevel = 1;
     }
 }
